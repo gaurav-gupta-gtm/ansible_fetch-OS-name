@@ -1,0 +1,17 @@
+- hosts: web
+  vars_files:
+  - "./vars/{{ ansible_distribution }}.yml"
+  tasks:
+  - name: Install software
+    package:
+      name: "{{ package_name }}"
+      state: present
+  - name: copy web pages
+    template:
+      src: ./index.html
+      dest: /var/www/html
+  - name: start services
+    service:
+      name: "{{ package_name }}"
+      state: started
+      enabled: yes
